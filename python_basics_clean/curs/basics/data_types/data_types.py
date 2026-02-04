@@ -1,0 +1,6 @@
+print(1, 1856)
+print(1.83, 5.33)
+print(4 + 5j, 1 + 1j)
+print("File", "", "ABC")
+print(False, True)
+print(None, None)
