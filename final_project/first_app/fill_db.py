@@ -1,3 +1,4 @@
+# Script pt. populare baza de date
 from first_app.models import Genre, Movie
 from datetime import datetime, date
 
@@ -45,3 +46,8 @@ godfather = Movie(
 )
 
 godfather.save()
+
+# Script pt. creare de useri
+from django.contrib.auth.models import User
+peter = User.objects.create_user('peter', password='regpasswd')
+claire = User.objects.create_user('claire', password='phil')

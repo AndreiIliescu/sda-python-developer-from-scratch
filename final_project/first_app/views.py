@@ -3,9 +3,13 @@ from first_app.models import Movie
 from first_app.forms import MovieForm
 from django.views import View
 from django.views.generic import TemplateView
-from django.views.generic import FormView, ListView, UpdateView, DeleteView
+from django.views.generic import (FormView, ListView, 
+                                  UpdateView, DeleteView, 
+                                  DetailView)
 from logging import getLogger
 from django.urls import reverse_lazy
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.views import LoginView
 
 
 LOGGER = getLogger()
@@ -34,7 +38,7 @@ class MoviesView(TemplateView):
     extra_context = {'movies': Movie.objects.all()}
 
 
-class MovieCreateView(FormView):
+class MovieCreateView(LoginRequiredMixin, FormView):
     template_name = 'form.html'
     form_class = MovieForm
     success_url = reverse_lazy('movie_create')
@@ -56,7 +60,7 @@ class MovieCreateView(FormView):
         return super().form_invalid(form)
 
 
-class MovieUpdateView(UpdateView):
+class MovieUpdateView(LoginRequiredMixin, UpdateView):
     template_name = 'form.html'
     model = Movie
     form_class = MovieForm
@@ -67,7 +71,17 @@ class MovieUpdateView(UpdateView):
         return super().form_invalid(form)
 
 
-class MovieDeleteView(DeleteView):
+class MovieDeleteView(LoginRequiredMixin, DeleteView):
     template_name = 'movie_confirm_delete.html'
     model = Movie
     success_url = reverse_lazy('index')
+
+
+class MovieDetailView(LoginRequiredMixin, DetailView):
+    template_name = 'movie_detail.html'
+    model = Movie
+
+
+# class SubmittableLoginView(LoginView):
+#     template_name = 'form.html'
+#     success_url = reverse_lazy('index')

@@ -15,14 +15,17 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from django.conf.urls.static import static
 from django.conf import settings
 from first_app import views
 from first_app.views import MoviesView, MovieCreateView, MovieUpdateView, MovieDeleteView
+from django.contrib.auth.views import LoginView
 
 
 urlpatterns = [
+    # first_app
+    # path('accounts/login/', SubmittableLoginView.as_view(), name='login'),
     path("admin/", admin.site.urls),
     path('hello/<s0>/', views.hello),
     # path('', views.movies, name='movies'),
@@ -30,6 +33,7 @@ urlpatterns = [
     path('movie/create', MovieCreateView.as_view(), name='movie_create'),
     path('movie/update/<pk>', MovieUpdateView.as_view(), name='movie_update'),
     path('movie/delete/<pk>', MovieDeleteView.as_view(), name='movie_delete'),
+    path('accounts/', include("accounts.urls")),
 ]
 
 if settings.DEBUG:
