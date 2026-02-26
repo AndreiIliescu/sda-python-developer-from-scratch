@@ -1,3 +1,4 @@
+/*
 // Event Listener on click
 function displayText() {
   console.log("The button has been clicked!");
@@ -20,3 +21,23 @@ console.log(strJSON)
 
 let thisWillBeAnObject = JSON.parse(strJSON);
 console.log(thisWillBeAnObject)
+
+==============================================================================================================================
+*/
+
+$('button').click(function () {
+    $('div').animate({left: '250px'});
+});
+
+$('button').click(function () {
+    $('div').animate({
+        left: '250px',
+        opacity: '0.5',
+        height: '150px'
+    });
+});
+
+$('button').click(function () {
+    $('div').animate({left: '100px'}, 'slow');
+    $('div').animate({fontSize: '3em'}, 'slow');
+});
