@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Comments</title>
+</head>
+
+<body>
+<h2>Comments:</h2>
+<div id="comments"></div>
+<hr>
+<h2>Add comment:</h2>
+<form id="add_comment_form" action="#" method="post">
+  <input name="name" placeholder="Name" id="name"><br>
+  <textarea name="text" placeholder="Comment" id="text"></textarea><br>
+  <input type="submit" value="Send">
+</form>
+</body>
+{% comment %} <script>alert('This page has been hacked!')</script> {% endcomment %}
+
+<script>
+  window.addEventListener('load', loadComments);
+
+  document.getElementById('add_comment_form').addEventListener('submit', function (event) {
+    event.preventDefault();
+
+    let xhr = new XMLHttpRequest();
+
+    let json = JSON.stringify({
+      name: document.getElementById('name').value,
+      text: document.getElementById('text').value
+    });
+
+    xhr.open("POST", '/add_comment')
+    xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+
+    xhr.send(json);
+
+    document.getElementById('name').value = '';
+    document.getElementById('text').value = '';
+    alert('Sent');
+
+    loadComments();
+
+    return false;
+  });
+
+  function loadComments() {
+    let xhr = new XMLHttpRequest();
+
+    xhr.onload = function () {
+      let comms_element = document.getElementById('comments');
+      let comments = JSON.parse(this.responseText);
+
+      comms_element.innerHTML = '';
+
+      comments.forEach(element => {
+        let hr = document.createElement('hr');
+
+        let p1 = document.createElement('p');
+        p1.innerText = `Name: ${element.name} | Data: ${element.date}`;
+
+        let p2 = document.createElement('p');
+        p2.innerText = element.text;
+
+        comms_element.appendChild(hr);
+        comms_element.appendChild(p1);
+        comms_element.appendChild(p2);
+      });
+    }
+
+    xhr.open("GET", '/get_comments')
+    xhr.send();
+  }
+</script>
+
+</html>

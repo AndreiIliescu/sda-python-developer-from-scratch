@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<style>
+  textarea, #result {
+    width: 50%;
+    margin: 20px;
+    height: 200px;
+  }
+
+  button[type=submit] {
+    margin-left: 20px;
+    padding: 5px 15px;
+    background: #ccc;
+    border: 0 none;
+    cursor: pointer;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+  }
+</style>
+<head>
+  <meta charset="UTF-8">
+  <title>ROT13</title>
+</head>
+<body>
+
+<form onSubmit="return captureForm()">
+  <div>
+    <textarea name="text" id="text"></textarea>
+  </div>
+  <div>
+    <button type="submit">Send</button>
+  </div>
+</form>
+<div id="result"></div>
+
+
+</body>
+<script>
+  function captureForm() {
+    text = document.getElementById("text").value
+    xhr = new XMLHttpRequest()
+    xhr.onload = function () {
+      if (xhr.status == 200) {
+        document.getElementById("result").innerHTML = xhr.responseText;
+      }
+    };
+    xhr.open("GET", "/do_it?text=" + text, true);
+    xhr.send();
+
+    return false;
+  }
+</script>
+</html>    

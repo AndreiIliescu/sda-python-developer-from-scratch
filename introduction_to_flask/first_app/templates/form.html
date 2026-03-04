@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grades</title>
+</head>
+
+<body>
+<form action="/send" method="post">
+    <input name="name" placeholder="Name"><br>
+    <input type="number" min="0" max="120" name="age" placeholder="Age"><br>
+    <p>
+        How much do you like this page?
+        <select name="score">
+            <option value="1">I don't like it at all</option>
+            <option value="2">not so much</option>
+            <option value="3">I like it</option>
+            <option value="4">I love it</option>
+        </select>
+    </p>
+    <input type="submit" value="Send">
+</form>
+</body>
+
+</html>
